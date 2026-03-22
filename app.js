@@ -4,20 +4,25 @@ var GEMINI_KEY = (typeof CONFIG !== 'undefined' && CONFIG.GEMINI_KEY) ? CONFIG.G
 function updateGeminiKeyUI(status, message) {
   var input = document.getElementById('gemini-key-input');
   var statusEl = document.getElementById('gemini-key-status');
+  var banner = document.querySelector('.api-key-banner');
   if (!input || !statusEl) return;
   input.value = GEMINI_KEY;
   if (!GEMINI_KEY) {
-    statusEl.textContent = 'No key set. Add your Gemini API key above.';
+    statusEl.textContent = 'No key set. Add your Gemini API key above to use the app.';
     statusEl.className = 'api-key-status';
+    if (banner) banner.style.display = 'flex';
   } else if (status === 'ok') {
     statusEl.textContent = 'Key saved. ' + (message || 'Ready');
     statusEl.className = 'api-key-status ok';
+    if (banner) banner.style.display = 'none';
   } else if (status === 'failed') {
     statusEl.textContent = 'Key failed: ' + (message || 'Please re-enter');
     statusEl.className = 'api-key-status failed';
+    if (banner) banner.style.display = 'flex';
   } else {
     statusEl.textContent = 'Key loaded. Ready to run.';
     statusEl.className = 'api-key-status ok';
+    if (banner) banner.style.display = 'none';
   }
 }
 

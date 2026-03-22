@@ -90,7 +90,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15
 .io-desc{font-size:12px;color:var(--muted)}
 
 /* API key banner */
-.api-key-banner{display:none;}
+.api-key-banner{position:sticky;top:65px;z-index:90;display:none;align-items:center;gap:8px;padding:10px 24px;background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(0,157,255,0.15);backdrop-filter:blur(20px)}
 .api-key-banner input{max-width:380px}
 .api-key-status{font-size:12px;color:var(--muted);margin-left:8px}
 .api-key-status.ok{color:var(--green)}

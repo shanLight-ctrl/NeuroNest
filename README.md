@@ -1,5 +1,5 @@
-# NeuroPace 🎯
-### AI-Powered Adaptive Study Companion
+# NeuroNest 🧠
+### AI-Powered Adaptive Learning Companion
 **GDG UTSC AI Case Competition 2026 — Build with AI, Powered by Google**
 
 ---
@@ -9,19 +9,18 @@
 The standard way of studying — walls of text, long readings, passive review — is built for one type of learner. But many university students don't fit that mould:
 
 - **International students** process content in a second language, doubling cognitive load
-- **Students with ADHD** struggle to sustain focus through long unbroken material  
+- **Students with ADHD** struggle to sustain focus through long unbroken material
 - **Students with dyslexia or autism** process text differently, requiring more time and repetition
 
 The result: slower reading, repeated reprocessing, heightened stress — and over time, disengagement and burnout.
 
 ## The Solution
 
-NeuroPace takes any academic content and transforms it into **gamified, sequenced study missions** using Gemini AI.
+NeuroNest takes any academic content and transforms it into your ideal learning format using Gemini AI. Choose how your brain learns best:
 
-- Paste any notes, textbook excerpt, or lecture transcript
-- Gemini breaks it into focused 5-minute missions with natural concept boundaries
-- Each mission has a comprehension quiz — answer correctly to unlock the next
-- Earn XP as you progress
+- 🎧 **Audio** — converts notes into a podcast-style script you can listen to anywhere
+- 🃏 **Simplified & Flashcards** — plain-language rewrite, step-by-step explanations, or downloadable flashcard sheets
+- 🎯 **Quiz & Feedback** — 3 progressive levels, pass to advance, fail and get targeted revision feedback
 
 ## Tech Stack
 
@@ -29,32 +28,33 @@ NeuroPace takes any academic content and transforms it into **gamified, sequence
 |-------|-----------|
 | Frontend | HTML, CSS, Vanilla JS |
 | AI | Google Gemini 2.0 Flash API |
-| Deployment | Static — runs in any browser |
+| Deployment | Static — runs in any browser, no backend |
 
 ## How to Run
 
 1. Clone this repo
-2. Open `index.html` in your browser
-3. Get a free Gemini API key at [aistudio.google.com](https://aistudio.google.com)
-4. Paste your key into the app
-5. Paste your notes and hit **Generate Missions**
+2. Copy `config.example.js` → rename to `config.js`
+3. Add your Gemini API key inside `config.js`
+4. Open `index.html` in your browser
+
+Get a free Gemini key at [aistudio.google.com](https://aistudio.google.com) — no credit card required.
 
 No installation, no backend, no dependencies.
 
 ## Project Structure
-
 ```
 neuropace/
-├── index.html   ← App structure
-├── style.css    ← All styling
-├── app.js       ← Logic + Gemini API call
+├── index.html          ← All screens and UI
+├── style.css           ← Crystal blue dark theme
+├── app.js              ← All logic + Gemini API calls
+├── config.example.js   ← API key template (copy to config.js)
 └── README.md
 ```
 
 ## Why Gemini
 
-This project uses Gemini 2.0 Flash for its speed, structured output reliability, and generous free tier — making it accessible to students worldwide without a credit card.
+Gemini 2.0 Flash is fast, reliable at structured JSON output, and has a generous free tier — making NeuroNest accessible to students worldwide without a credit card.
 
 ---
 
-*Built by a solo international student with ADHD, for students like me.*
+*Built solo by an international student with ADHD, for students like me.*
