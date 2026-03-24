@@ -16,8 +16,8 @@ The standard way of studying — walls of text, long readings, passive review �
 
 NeuroNest takes any academic content and transforms it into your ideal learning format using Gemini AI:
 
-- 🎧 **Audio** — converts notes into a podcast-style script you can listen to anywhere
-- 🃏 **Simplified & Flashcards** — plain-language rewrite, explanations, or downloadable flashcard sheets
+- 🎧 **Audio** — choose Normal or Podcast style, listen in-browser or download as MP3
+- 🃏 **Simplified & Flashcards** — plain-language rewrite, step-by-step explanations, or downloadable flashcard sheets
 - 🎯 **Quiz & Feedback** — 3 progressive levels, pass to advance, fail and get targeted revision feedback
 
 ## Tech Stack
@@ -26,48 +26,48 @@ NeuroNest takes any academic content and transforms it into your ideal learning 
 |-------|-----------|
 | Frontend | HTML, CSS, Vanilla JS |
 | Backend | Python, FastAPI |
-| AI | Google Gemini 2.0 Flash API |
-| Deployment | GitHub Pages + Google Cloud Run |
+| AI | Google Gemini 2.5 Flash |
+| TTS | gTTS (Google Text-to-Speech) |
+| Deployment | GitHub Pages + Render |
 
 ## Project Structure
+
 ```
 NeuroNest/
 ├── index.html              ← Frontend UI
 ├── style.css               ← Styles
 ├── app.js                  ← Frontend logic
-├── config.example.js       ← API key template (copy to config.js)
-├── neuronest-backend/      ← FastAPI backend
+├── config.example.js       ← Backend URL template (copy to config.js)
+├── backend/                ← FastAPI backend
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── Dockerfile
-│   ├── .env.example
-│   └── README.md
+│   └── .env.example
 └── README.md
 ```
 
-## How to Run
-
-### Frontend
-```bash
-cp config.example.js config.js
-# open index.html in your browser
-```
+## How to Run Locally
 
 ### Backend
 ```bash
-cd neuronest-backend
+cd backend
 pip install -r requirements.txt
-cp .env.example .env
-# add your GEMINI_KEY to .env
-uvicorn main:app --reload --port 8080
+cp .env.example .env        # add your GEMINI_KEY
+python -m uvicorn main:app --reload
+```
+
+### Frontend
+```bash
+cp config.example.js config.js   # set BACKEND_URL to http://localhost:8000
+# open index.html in your browser
 ```
 
 Get a free Gemini key at [aistudio.google.com](https://aistudio.google.com).
 
 ## Deploy
 
-- **Frontend** → GitHub Pages (automatic from main branch)
-- **Backend** → Google Cloud Run (see `neuronest-backend/README.md`)
+- **Frontend** → GitHub Pages (automatic from `main` branch root)
+- **Backend** → Render (connect repo, set root to `backend`, add `GEMINI_KEY` env var)
 
 ---
 
