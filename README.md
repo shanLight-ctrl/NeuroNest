@@ -1,6 +1,11 @@
-# NeuroNest
+# NeuroNest 🧠
 ### AI-Powered Adaptive Learning Companion
-**GDG UTSC AI Case Competition 2026 — Build with AI, Powered by Google**
+
+> Transforms any academic content into the format your brain learns best — audio, flashcards, or progressive quizzes.
+
+🔗 **[Live Demo → shanlight-ctrl.github.io/NeuroNest](https://shanlight-ctrl.github.io/NeuroNest)**
+
+![NeuroNest Demo](demo.png)
 
 ---
 
@@ -12,13 +17,13 @@ The standard way of studying — walls of text, long readings, passive review �
 - **Students with ADHD** struggle to sustain focus through long unbroken material
 - **Students with dyslexia or autism** process text differently, requiring more time and repetition
 
-## The Solution
+## Features
 
-NeuroNest takes any academic content and transforms it into your ideal learning format using Gemini AI:
-
-- 🎧 **Audio** — choose Normal or Podcast style, listen in-browser or download as MP3
-- 🃏 **Simplified & Flashcards** — plain-language rewrite, step-by-step explanations, or downloadable flashcard sheets
-- 🎯 **Quiz & Feedback** — 3 progressive levels, pass to advance, fail and get targeted revision feedback
+| Mode | What it does |
+|------|-------------|
+| 🎧 **Audio** | Converts notes into Normal or Podcast-style scripts — listen in-browser or download as MP3 |
+| 🃏 **Simplified & Flashcards** | Plain-language rewrite, step-by-step explanations, or downloadable flashcard sheets |
+| 🎯 **Quiz & Feedback** | 3 progressive levels — pass to advance, fail and get targeted revision feedback |
 
 ## Tech Stack
 
@@ -37,16 +42,16 @@ NeuroNest/
 ├── index.html              ← Frontend UI
 ├── style.css               ← Styles
 ├── app.js                  ← Frontend logic
-├── config.example.js       ← Backend URL template (copy to config.js)
-├── backend/                ← FastAPI backend
-│   ├── main.py
+├── config.example.js       ← Backend URL template
+├── backend/                ← FastAPI server
+│   ├── main.py             ← API endpoints
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   └── .env.example
 └── README.md
 ```
 
-## How to Run Locally
+## Run Locally
 
 ### Backend
 ```bash
@@ -66,9 +71,9 @@ Get a free Gemini key at [aistudio.google.com](https://aistudio.google.com).
 
 ## Deploy
 
-- **Frontend** → GitHub Pages (automatic from `main` branch root)
-- **Backend** → Render (connect repo, set root to `backend`, add `GEMINI_KEY` env var)
+- **Frontend** → GitHub Pages (root of `main` branch)
+- **Backend** → Render (root directory: `backend`, add `GEMINI_KEY` env var)
 
 ---
 
-*Built by a solo international student with ADHD — for students like me.*
+*Built for GDG UTSC AI Case Competition 2026 — by a solo international student with ADHD, for students like me.*
