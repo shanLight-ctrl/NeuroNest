@@ -187,6 +187,34 @@ function downloadScript() {
   document.body.removeChild(a);
 }
 
+async function downloadAudio() {
+  var text = document.getElementById('audio-script-box').innerText;
+  if (!text) return;
+  var btn = document.getElementById('download-audio-btn');
+  btn.textContent = '⏳ Generating…';
+  btn.disabled = true;
+  try {
+    var res = await fetch(BACKEND_URL + '/audio/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: text })
+    });
+    if (!res.ok) throw new Error('Failed to generate audio');
+    var blob = await res.blob();
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'NeuroNest_Audio.mp3';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } catch (e) {
+    alert('Error: ' + e.message);
+  } finally {
+    btn.textContent = '🔊 Download MP3';
+    btn.disabled = false;
+  }
+}
+
 function resetAudio() {
   window.speechSynthesis.cancel();
   currentUtterance = null;

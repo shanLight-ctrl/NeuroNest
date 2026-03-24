@@ -1,12 +1,15 @@
 import os
+import io
 import json
 import re
 import httpx
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from gtts import gTTS
 
 load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
@@ -144,3 +147,14 @@ async def generate_quiz(req: QuizRequest):
         max_tokens=4096
     )
     return {"levels": extract_json(raw)}
+
+
+@app.post("/audio/download")
+async def download_audio(req: ContentRequest):
+    """Convert script text to MP3 and return as downloadable file."""
+    tts = gTTS(text=req.content, lang='en', slow=False)
+    buf = io.BytesIO()
+    tts.write_to_fp(buf)
+    buf.seek(0)
+    return StreamingResponse(buf, media_type="audio/mpeg",
+        headers={"Content-Disposition": "attachment; filename=NeuroNest_Audio.mp3"})
