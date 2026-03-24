@@ -2,12 +2,13 @@ import os
 import json
 import re
 import httpx
+from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
 app = FastAPI(title="NeuroNest API", version="1.0.0")
 
@@ -20,7 +21,7 @@ app.add_middleware(
 )
 
 GEMINI_KEY = os.environ.get("GEMINI_KEY", "")
-GEMINI_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent"
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
 
 
 # ── Models ──

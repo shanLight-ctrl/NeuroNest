@@ -1,0 +1,15 @@
+# Backend
+backend/.env
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/venv/
+
+# Frontend
+neuronest-frontend/config.js
+frontend/config.js
+
+# System
+.venv/
+.DS_Store
+.vscode/
