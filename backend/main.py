@@ -83,14 +83,23 @@ def root():
 
 @app.post("/audio")
 async def generate_audio(req: ContentRequest):
-    """Convert academic content to a podcast-style audio script."""
-    prompt = (
-        "Rewrite the following academic content as a natural, engaging podcast-style spoken audio script. "
-        "Write ONLY for the ear — no markdown, no bullet points, no symbols. "
-        "Use natural spoken transitions like 'Now here's the interesting part' or 'Think of it this way'. "
-        "Preserve all technical accuracy. Return only the spoken script.\n\n"
-        f"Content:\n{req.content}"
-    )
+    """Convert academic content to a spoken audio script."""
+    if req.style == "normal":
+        prompt = (
+            "Rewrite the following academic content as a clear, spoken audio explanation. "
+            "Write ONLY for the ear — no markdown, no bullet points, no symbols. "
+            "Use simple, direct language. Explain each concept clearly and in order. "
+            "Preserve all technical accuracy. Return only the spoken script.\n\n"
+            f"Content:\n{req.content}"
+        )
+    else:
+        prompt = (
+            "Rewrite the following academic content as a natural, engaging podcast-style spoken audio script. "
+            "Write ONLY for the ear — no markdown, no bullet points, no symbols. "
+            "Use natural spoken transitions like 'Now here's the interesting part' or 'Think of it this way'. "
+            "Preserve all technical accuracy. Return only the spoken script.\n\n"
+            f"Content:\n{req.content}"
+        )
     script = await call_gemini(prompt)
     word_count = len(script.split())
     return {

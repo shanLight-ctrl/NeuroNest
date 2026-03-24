@@ -77,6 +77,24 @@
             </div>
           </div>
         </div>
+        <div id="audio-style-choice" style="display:none">
+          <div class="section-title">What style of audio do you want?</div>
+          <div class="choice-grid">
+            <button class="choice-btn" onclick="selectAudioStyle('normal')">
+              <span class="cb-icon">🗣️</span>
+              <div class="cb-name">Normal</div>
+              <div class="cb-desc">Clear, straightforward explanation — easy to follow</div>
+            </button>
+            <button class="choice-btn" onclick="selectAudioStyle('podcast')">
+              <span class="cb-icon">🎙️</span>
+              <div class="cb-name">Podcast</div>
+              <div class="cb-desc">Engaging, conversational — like a real podcast episode</div>
+            </button>
+          </div>
+          <div style="margin-top:12px">
+            <button class="btn btn-outline btn-sm" onclick="hideEl('audio-style-choice');showEl('audio-input-choice')">← Change input</button>
+          </div>
+        </div>
         <div id="audio-text-input" style="display:none">
           <div class="card">
             <div class="card-head"><span class="card-icon">📝</span><span class="card-label">Your Notes</span></div>
@@ -87,7 +105,7 @@
                 <span class="char-count" id="audio-char">0 characters</span>
                 <div style="display:flex;gap:8px">
                   <button class="btn btn-outline btn-sm"
-                    onclick="showEl('audio-input-choice');hideEl('audio-text-input')">← Change</button>
+                    onclick="showEl('audio-style-choice');hideEl('audio-text-input')">← Change</button>
                   <button class="btn btn-cyan btn-sm" onclick="processAudioText()">Generate Script →</button>
                 </div>
               </div>
@@ -113,7 +131,7 @@
               </div>
               <div style="margin-top:12px">
                 <button class="btn btn-outline btn-sm"
-                  onclick="showEl('audio-input-choice');hideEl('audio-upload-input')">← Change</button>
+                  onclick="showEl('audio-style-choice');hideEl('audio-upload-input')">← Change</button>
               </div>
             </div>
           </div>

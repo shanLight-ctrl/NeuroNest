@@ -50,9 +50,19 @@ function copySimplified() {
 // ════════════════════════
 // AUDIO MODE
 // ════════════════════════
+var audioInputType = 'text';
+var audioStyle = 'podcast';
+
 function showAudioInput(type) {
+  audioInputType = type;
   hideEl('audio-input-choice');
-  if (type === 'text') showEl('audio-text-input');
+  showEl('audio-style-choice');
+}
+
+function selectAudioStyle(style) {
+  audioStyle = style;
+  hideEl('audio-style-choice');
+  if (audioInputType === 'text') showEl('audio-text-input');
   else showEl('audio-upload-input');
 }
 
@@ -86,7 +96,7 @@ async function generateAudioScript(text) {
     document.getElementById('audio-loading-msg').textContent = msgs[Math.min(++mi, 2)];
   }, 2000);
   try {
-    var data = await apiPost('/audio', { content: text });
+    var data = await apiPost('/audio', { content: text, style: audioStyle });
     var script = data.script;
     clearInterval(iv); hideEl('audio-loading');
     // Build animated waveform
@@ -218,9 +228,10 @@ async function downloadAudio() {
 function resetAudio() {
   window.speechSynthesis.cancel();
   currentUtterance = null;
-  hideEl('audio-result'); hideEl('audio-text-input'); hideEl('audio-upload-input');
+  hideEl('audio-result'); hideEl('audio-text-input'); hideEl('audio-upload-input'); hideEl('audio-style-choice');
   showEl('audio-input-choice');
   isPlaying = false;
+  audioStyle = 'podcast';
 }
 
 // ════════════════════════
