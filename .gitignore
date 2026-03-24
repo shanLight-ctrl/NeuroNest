@@ -6,7 +6,6 @@ backend/.venv/
 backend/venv/
 
 # Frontend
-neuronest-frontend/config.js
 frontend/config.js
 
 # System
