@@ -75,6 +75,11 @@
               <div class="io-name">Upload Audio</div>
               <div class="io-desc">Upload a lecture recording — we'll transcribe it first</div>
             </div>
+            <div class="input-opt" onclick="showAudioInput('image')">
+              <span class="io-icon">🖼️</span>
+              <div class="io-name">Upload Image</div>
+              <div class="io-desc">Photo of handwritten notes or a textbook page — we'll read it</div>
+            </div>
           </div>
         </div>
         <div id="audio-style-choice" style="display:none">
@@ -132,6 +137,27 @@
               <div style="margin-top:12px">
                 <button class="btn btn-outline btn-sm"
                   onclick="showEl('audio-style-choice');hideEl('audio-upload-input')">← Change</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="audio-image-input" style="display:none">
+          <div class="card">
+            <div class="card-head"><span class="card-icon">🖼️</span><span class="card-label">Upload Image</span></div>
+            <div class="card-body">
+              <div class="upload-zone" onclick="document.getElementById('audio-img-file').click()">
+                <span class="uz-icon">🖼️</span>
+                <p><strong>Click to upload</strong> a photo of your notes</p>
+                <p style="margin-top:6px;font-size:11px">JPG, PNG, WEBP supported</p>
+                <input type="file" id="audio-img-file" accept="image/*" onchange="handleAudioImageFile(this)" />
+              </div>
+              <div id="audio-image-extracted" style="display:none;margin-top:16px">
+                <div class="section-title">Extracted text</div>
+                <div class="transcript-box" id="audio-image-text-box"></div>
+                <button class="btn btn-cyan btn-full" onclick="processAudioImageText()">Continue with this text →</button>
+              </div>
+              <div style="margin-top:12px">
+                <button class="btn btn-outline btn-sm" onclick="showEl('audio-style-choice');hideEl('audio-image-input')">← Change</button>
               </div>
             </div>
           </div>
@@ -194,6 +220,11 @@
           <div class="card">
             <div class="card-head"><span class="card-icon">📄</span><span class="card-label">Your Content</span></div>
             <div class="card-body">
+              <div class="image-upload-bar">
+                <span>Have a photo of your notes?</span>
+                <button class="img-upload-btn" onclick="document.getElementById('cards-img-file').click()">🖼️ <span id="cards-img-lbl">Upload Image</span></button>
+                <input type="file" id="cards-img-file" accept="image/*" style="display:none" onchange="fillFromImage(this,'cards-text','cards-char','cards-img-lbl')">
+              </div>
               <textarea id="cards-text" placeholder="Paste your notes, textbook excerpt, or any academic content…"
                 oninput="countChars('cards-text','cards-char')"></textarea>
               <div class="char-row"><span class="char-count" id="cards-char">0 characters</span></div>
@@ -269,6 +300,11 @@
             <div class="card-head"><span class="card-icon">📄</span><span class="card-label">Your Study Material</span>
             </div>
             <div class="card-body">
+              <div class="image-upload-bar">
+                <span>Have a photo of your notes?</span>
+                <button class="img-upload-btn" onclick="document.getElementById('quiz-img-file').click()">🖼️ <span id="quiz-img-lbl">Upload Image</span></button>
+                <input type="file" id="quiz-img-file" accept="image/*" style="display:none" onchange="fillFromImage(this,'quiz-text','quiz-char','quiz-img-lbl')">
+              </div>
               <textarea id="quiz-text" placeholder="Paste your notes or study material to generate a 3-level quiz…"
                 oninput="countChars('quiz-text','quiz-char')"></textarea>
               <div class="char-row">

@@ -40,6 +40,10 @@ class CardsRequest(BaseModel):
 class QuizRequest(BaseModel):
     content: str
 
+class ImageRequest(BaseModel):
+    image_base64: str
+    mime_type: str = "image/jpeg"
+
 
 # ── Gemini helper ──
 
@@ -156,6 +160,27 @@ async def generate_quiz(req: QuizRequest):
         max_tokens=4096
     )
     return {"levels": extract_json(raw)}
+
+
+@app.post("/extract-image")
+async def extract_image_text(req: ImageRequest):
+    """Extract text from an image using Gemini Vision."""
+    if not GEMINI_KEY:
+        raise HTTPException(500, "GEMINI_KEY not configured on server.")
+    async with httpx.AsyncClient(timeout=60) as client:
+        r = await client.post(
+            f"{GEMINI_URL}?key={GEMINI_KEY}",
+            json={
+                "contents": [{"parts": [
+                    {"text": "Extract all the text from this image accurately. Return only the extracted text, preserving its structure. If handwritten, transcribe it clearly."},
+                    {"inline_data": {"mime_type": req.mime_type, "data": req.image_base64}}
+                ]}],
+                "generationConfig": {"temperature": 0.1, "maxOutputTokens": 4096}
+            }
+        )
+        if not r.is_success:
+            raise HTTPException(r.status_code, r.json().get("error", {}).get("message", "Gemini error"))
+        return {"text": r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()}
 
 
 @app.post("/audio/download")

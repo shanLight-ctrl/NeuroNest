@@ -1,3 +1,3 @@
 var CONFIG = {
-    BACKEND_URL: "https://neuronest-1.onrender.com"
+    BACKEND_URL: "http://localhost:8000"
 };

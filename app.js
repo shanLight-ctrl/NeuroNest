@@ -63,7 +63,8 @@ function selectAudioStyle(style) {
   audioStyle = style;
   hideEl('audio-style-choice');
   if (audioInputType === 'text') showEl('audio-text-input');
-  else showEl('audio-upload-input');
+  else if (audioInputType === 'audio') showEl('audio-upload-input');
+  else showEl('audio-image-input');
 }
 
 function handleAudioFile(input) {
@@ -228,10 +229,58 @@ async function downloadAudio() {
 function resetAudio() {
   window.speechSynthesis.cancel();
   currentUtterance = null;
-  hideEl('audio-result'); hideEl('audio-text-input'); hideEl('audio-upload-input'); hideEl('audio-style-choice');
+  hideEl('audio-result'); hideEl('audio-text-input'); hideEl('audio-upload-input');
+  hideEl('audio-image-input'); hideEl('audio-style-choice');
   showEl('audio-input-choice');
   isPlaying = false;
   audioStyle = 'podcast';
+}
+
+async function handleAudioImageFile(input) {
+  if (!input.files[0]) return;
+  var file = input.files[0];
+  var zone = input.parentElement;
+  zone.querySelector('p').innerHTML = '<strong style="color:var(--cyan)">⏳ Reading image…</strong>';
+  var reader = new FileReader();
+  reader.onload = async function (e) {
+    var base64 = e.target.result.split(',')[1];
+    try {
+      var data = await apiPost('/extract-image', { image_base64: base64, mime_type: file.type || 'image/jpeg' });
+      document.getElementById('audio-image-text-box').textContent = data.text;
+      zone.querySelector('p').innerHTML = '<strong style="color:var(--cyan)">✓ ' + file.name + '</strong>';
+      showEl('audio-image-extracted');
+    } catch (err) {
+      zone.querySelector('p').innerHTML = '<strong>Click to upload</strong> a photo of your notes';
+      alert('Could not read image: ' + err.message);
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function processAudioImageText() {
+  var text = document.getElementById('audio-image-text-box').textContent.trim();
+  generateAudioScript(text);
+}
+
+async function fillFromImage(input, textareaId, charId, labelId) {
+  if (!input.files[0]) return;
+  var file = input.files[0];
+  var lbl = document.getElementById(labelId);
+  if (lbl) lbl.textContent = '⏳ Reading…';
+  var reader = new FileReader();
+  reader.onload = async function (e) {
+    var base64 = e.target.result.split(',')[1];
+    try {
+      var data = await apiPost('/extract-image', { image_base64: base64, mime_type: file.type || 'image/jpeg' });
+      document.getElementById(textareaId).value = data.text;
+      if (charId) countChars(textareaId, charId);
+      if (lbl) lbl.textContent = '✓ Done';
+    } catch (err) {
+      if (lbl) lbl.textContent = 'Upload Image';
+      alert('Could not read image: ' + err.message);
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 // ════════════════════════
